@@ -1,0 +1,333 @@
+@import "tailwindcss";
+
+/*
+ * UploadReady design tokens.
+ * Paper, navy ink, ballpoint blue for actions, highlighter yellow for the
+ * rules found in the applicant's instructions, and status colours that only
+ * ever mean pass / needs attention / blocked.
+ */
+@theme {
+  --font-sans: "Archivo Variable", "Archivo", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --color-paper: #ffffff;
+  --color-sheet: #f4f6fa;
+  --color-ink: #0f1f4b;
+  --color-ink-2: #3a4565;
+  --color-ink-3: #6a7390;
+  --color-rule: #d9dfea;
+  --color-rule-soft: #e9edf4;
+  --color-pen: #2346e8;
+  --color-pen-hover: #1b37c2;
+  --color-pen-tint: #eaeefe;
+  --color-marker: #ffe45c;
+  --color-marker-soft: #fff3a6;
+  --color-pass: #11774a;
+  --color-pass-tint: #e4f4eb;
+  --color-warn: #94590a;
+  --color-warn-tint: #fff1d9;
+  --color-fail: #c2302c;
+  --color-fail-tint: #fbe9e8;
+
+  --color-series-1: #2346e8;
+  --color-series-2: #eb6834;
+  --color-series-3: #1baf7a;
+
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.125rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.375rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.625rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.3125rem;
+  --text-xl--line-height: 1.875rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2rem;
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: 2.5rem;
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+
+  --shadow-sheet: 0 1px 0 rgb(15 31 75 / 0.04), 0 18px 40px -20px rgb(15 31 75 / 0.28);
+  --shadow-pop: 0 10px 30px -12px rgb(15 31 75 / 0.35);
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink-2);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.625;
+  font-stretch: 100%;
+}
+
+::selection {
+  background: var(--color-marker-soft);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-pen);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ---------------------------- Type treatments ---------------------------- */
+
+.type-display {
+  color: var(--color-ink);
+  font-weight: 800;
+  font-stretch: 104%;
+  letter-spacing: -0.028em;
+  line-height: 1;
+}
+
+.type-h2 {
+  color: var(--color-ink);
+  font-size: clamp(1.75rem, 3.4vw, 2.25rem);
+  line-height: 1.12;
+  font-weight: 760;
+  font-stretch: 106%;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.type-h3 {
+  color: var(--color-ink);
+  font-size: 1.3125rem;
+  line-height: 1.4;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+}
+
+.type-lead {
+  font-size: 1.125rem;
+  line-height: 1.75rem;
+  color: var(--color-ink-2);
+  text-wrap: pretty;
+}
+
+.nums {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Highlighter marks on rules found in the instructions. */
+.marker {
+  background: linear-gradient(
+    176deg,
+    transparent 10%,
+    var(--color-marker-soft) 10%,
+    var(--color-marker-soft) 86%,
+    transparent 86%
+  );
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  padding: 0 0.12em;
+  margin: 0 -0.04em;
+  color: var(--color-ink);
+}
+
+/* ------------------------ Hero: the headline that fits ------------------- */
+
+.fit-frame {
+  container-type: inline-size;
+}
+
+.fit-headline {
+  font-size: clamp(2.4rem, 11cqi, 4.5rem);
+}
+
+.fit-dimension {
+  color: var(--color-pass);
+}
+
+@media (min-width: 768px) and (prefers-reduced-motion: no-preference) {
+  .fit-headline .fit-line {
+    white-space: nowrap;
+  }
+  .fit-headline {
+    animation: fit-stretch 1.25s cubic-bezier(0.22, 0.9, 0.24, 1) 0.45s both;
+  }
+  .fit-dimension {
+    animation: fit-colour 1.25s steps(1, end) 0.45s both;
+  }
+  .fit-state-over {
+    animation: fit-out 1.25s steps(1, end) 0.45s both;
+  }
+  .fit-state-fits {
+    animation: fit-in 1.25s steps(1, end) 0.45s both;
+  }
+}
+
+@keyframes fit-stretch {
+  from {
+    font-stretch: 125%;
+  }
+  to {
+    font-stretch: 104%;
+  }
+}
+@keyframes fit-colour {
+  from {
+    color: var(--color-fail);
+  }
+  to {
+    color: var(--color-pass);
+  }
+}
+@keyframes fit-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes fit-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.fit-state-over {
+  opacity: 0;
+}
+
+/* --------------------------- Hero demo gauges ----------------------------- */
+
+.demo-row .demo-fill {
+  width: var(--to);
+  background: var(--color-pass);
+}
+.demo-row .demo-out {
+  opacity: 1;
+}
+.demo-row .demo-status-fail {
+  display: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .demo-row .demo-fill {
+    animation: demo-fill 0.9s cubic-bezier(0.22, 0.9, 0.24, 1) var(--delay) both;
+  }
+  .demo-row .demo-out {
+    animation: demo-reveal 0.5s ease-out calc(var(--delay) + 0.45s) both;
+  }
+  .demo-row .demo-status-fail {
+    display: inline-flex;
+    animation: fit-out 0.9s steps(1, end) var(--delay) both;
+  }
+  .demo-row .demo-status-pass {
+    animation: fit-in 0.9s steps(1, end) var(--delay) both;
+  }
+}
+
+@keyframes demo-fill {
+  0% {
+    width: 100%;
+    background: var(--color-fail);
+  }
+  35% {
+    width: 100%;
+    background: var(--color-fail);
+  }
+  100% {
+    width: var(--to);
+    background: var(--color-pass);
+  }
+}
+@keyframes demo-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(3px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* -------------------------------- Misc ----------------------------------- */
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes expand {
+  from {
+    height: 0;
+  }
+  to {
+    height: var(--radix-accordion-content-height);
+  }
+}
+@keyframes collapse {
+  from {
+    height: var(--radix-accordion-content-height);
+  }
+  to {
+    height: 0;
+  }
+}
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.grid-paper {
+  background-color: var(--color-sheet);
+  background-image:
+    linear-gradient(to right, rgb(15 31 75 / 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(15 31 75 / 0.045) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.checkerboard {
+  background-color: #fff;
+  background-image:
+    linear-gradient(45deg, #eef1f6 25%, transparent 25%),
+    linear-gradient(-45deg, #eef1f6 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, #eef1f6 75%),
+    linear-gradient(-45deg, transparent 75%, #eef1f6 75%);
+  background-size: 16px 16px;
+  background-position:
+    0 0,
+    0 8px,
+    8px -8px,
+    -8px 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

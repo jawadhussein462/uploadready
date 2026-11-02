@@ -1,0 +1,13 @@
+.DS_Store
+node_modules
+.next
+out
+.env
+.env.local
+.env*.local
+*.tsbuildinfo
+next-env.d.ts
+.vercel
+coverage
+public/pdf.worker.min.mjs
+e2e/output
